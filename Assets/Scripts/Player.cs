@@ -8,10 +8,10 @@ using Object = System.Object;
 public class Player : MonoBehaviour
 {
     public static Player _instance { get; private set; }
-    [SerializeField] private float speed;
-    [SerializeField] private float fireRate = 0.5f;
-    [SerializeField] private float HP=3f;
-    [SerializeField] private Slider sliderHP;
+    [SerializeField] public  float speed;
+    [SerializeField] public  float fireRate = 0.5f;
+    [SerializeField] public float HP=3f;
+    [SerializeField] public Slider sliderHP;
     [SerializeField] private GameObject vfxHit;
     [SerializeField] private ParticleSystem vfxShoot;
     public int bulletId;

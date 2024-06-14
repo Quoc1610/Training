@@ -6,7 +6,7 @@ using UnityEngine;
 public class AllManager : MonoBehaviour
 {
     public static AllManager _instance { get; private set; }
-
+    public LevelConfig levelConfig;
     public BulletManager bulletManager;
     public MeteorManager meteorManager;
     public ItemManager itemManager;
@@ -16,7 +16,8 @@ public class AllManager : MonoBehaviour
     public BulletConfig burstConfig;
     public BulletConfig beamConfig;
     public GameObject vfxHit;
-
+    public int levelCount;
+    private int countEnemy=0, countMeteo=0, countItem=0;
     public static AllManager GetInstance()
     {
         if (_instance == null)
@@ -28,10 +29,14 @@ public class AllManager : MonoBehaviour
 
     private void Start()
     {
+        levelCount = 0;
+        
+
         bulletManager = new BulletManager();
         bulletManager.bulletConfig = bulletConfig;
         bulletManager.beamBulletConfig = beamConfig;
         bulletManager.burstBulletConfig = burstConfig;
+        
         meteorManager = new MeteorManager();
         itemManager = new ItemManager();
         itemManager.itemBeamConfig = itemBeamConfig;
@@ -61,20 +66,27 @@ public class AllManager : MonoBehaviour
     }
     IEnumerator Cor_SpawnMeteo()
     {
-        yield return new WaitForSeconds(1);
+        countMeteo++;
+        if (countMeteo == levelConfig.levelSettings[levelCount].countMeteo) yield break;
+        yield return new WaitForSeconds(levelConfig.levelSettings[levelCount].spawnRate);
         meteorManager.SawpnMeteo();
+        
         StartCoroutine(Cor_SpawnMeteo());
     }
     IEnumerator Cor_SpawnEnemy()
     {
-        yield return new WaitForSeconds(1);
+        countEnemy++;
+        if (countEnemy == levelConfig.levelSettings[levelCount].countEnemy) yield break;
+        yield return new WaitForSeconds(levelConfig.levelSettings[levelCount].spawnRate);
         meteorManager.SpawnEnemy();
         StartCoroutine(Cor_SpawnEnemy());
     }
     
     IEnumerator Cor_SpawnItem()
     {
-        yield return new WaitForSeconds(1);
+        countItem++;
+        if (countItem == levelConfig.levelSettings[levelCount].countItem) yield break;
+        yield return new WaitForSeconds(levelConfig.levelSettings[levelCount].spawnRate);
         itemManager.SpawnItem();
         StartCoroutine(Cor_SpawnItem());
     }

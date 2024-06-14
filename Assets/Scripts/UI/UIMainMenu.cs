@@ -10,6 +10,6 @@ public class UIMainMenu : MonoBehaviour
     
     public void On_PlayClicked()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("level1");
     }
 }
